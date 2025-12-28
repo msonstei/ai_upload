@@ -40,6 +40,7 @@ test_file = '/media/projects/C101017_Temp_EDS_Svc_Birch_Hill_Tank_Farm/Planning/
 #directory_path = '/home/marks/docling/input/transfer/' #'/media/projects'
 directory_path = '/home/webui/Desktop/Close_out/'
 OUTPUT_DIR = '/home/marks/docling/output'
+LOG_FILE = '/home/marks/docling/logs/upload.log'
 # Define the allowed file extensions
 ALLOWED_FILE_TYPES = ['.docx','.xlsx','.pptx','.md','.csv','.pdf']
 
@@ -47,6 +48,8 @@ def configure_logging(verbose: bool) -> None:
     """Set up a simple console logger."""
     level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(
+        filename= LOG_FILE,
+        filemadoe='a',
         format="%(asctime)s %(levelname)-8s %(message)s",
         level=level,
         datefmt="%H:%M:%S",
@@ -282,7 +285,7 @@ def create_knowledge(kname, token):
 
 
 def count_files_pathlib(directory_path):
-  """Counts all files recursively in a directory using pathlib."""
+  """Count all files recursively in a directory using pathlib."""
   # Use rglob('*') to find all files and directories recursively
   # Filter only for files using a list comprehension or generator expression
   count = len([file for file in Path(directory_path).rglob('*') if file.is_file()])
