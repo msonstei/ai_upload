@@ -1,0 +1,440 @@
+#!/usr/bin/env python3
+"""
+Upload every *.pdf in ./pdf to Open‑WebUI and attach each file to an existing
+knowledge entry (knowledge_id).  This version automatically discovers the
+correct file‑upload endpoint (tries a handful of historic paths and checks the
+OPTIONS response for a POST method).
+"""
+
+# ----------------------------------------------------------------------
+# Imports & constants
+# ----------------------------------------------------------------------
+import sys
+import os
+
+import json
+import argparse
+import pathlib
+import getpass
+from typing import Dict, List, Tuple
+
+import requests
+from requests import Request
+import subprocess
+from tqdm import tqdm
+from tabulate import tabulate
+
+DEFAULT_BASE_URL = '' #"http://du-webui"
+PDF_DIR = pathlib.Path("pdf")
+CHUNK_SIZE = 8192
+
+#login
+def login():
+    url = 'http://du-webui/api/auths/signin' # a site that echoes back the request headers
+    custom_headers = {
+        #'User-Agent': 'Python-Requests-Script',
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+    }
+    user_data = {
+         'email':'msonstein@doyonutilities.com',
+         'password':'!!BCohm211bcohm2',
+    }
+    response = requests.get(url, headers=custom_headers, data=user_data)
+    print(f"Response: {response.status_code}")
+    if response.status_code == 200:
+        # 3. Parse the JSON response into a Python dictionary
+        #response_data = response.json()
+        print("200")
+        # 4. Extract the token value using dictionary keys
+        # Replace 'token' with the actual key name in your JSON response
+        token = os.environ['OPEN_KEY'] #= response.get("token") # Using .get() prevents a KeyError if the key is missing
+        print(token)
+    else:
+        print("Not 200")
+
+    #url = 'http://du-webui/api/v1/auths/api_key'
+    #custom_headers = {'Accept': 'application/json'}
+    #response = requests.get(url, headers=custom_headers)
+    #for item in response.body:
+    #  for k,v in item:
+    #     print(f"Response: {k},{v}")
+    #print(f"Response2: {response}")
+    return response
+
+#curl -X 'POST' \
+#  'http://du-webui/api/v1/auths/signin' \
+#  -H 'accept: application/json' \
+#  -H 'Content-Type: application/json' \
+#  -d '{"email": "msonstein@doyonutilities.com","password": "!!BCohm211bcohm2"}'
+
+
+# ----------------------------------------------------------------------
+# Helper functions
+# ----------------------------------------------------------------------
+def auth_headers(token: str = None, email: str = None, password: str = None) -> Dict[str, str]:
+    """Build the appropriate Authorization header."""
+    try:
+        return {"Authorization": f"Bearer {token}"} #,"Content-Type":"multipart/form-data"}
+    except Exception as e:
+        print(f"Error {e}")
+        if email and password:
+            import base64
+            b64 = base64.b64encode(f"{email}:{password}".encode()).decode()
+            return {"Authorization": f"Basic {b64}"}
+        raise ValueError("You must supply either a token or (user + pwd).")
+
+
+def get_server_version(base_url: str, headers: Dict[str, str]) -> str:
+    """Ask a few known version‑endpoints; return whatever we get."""
+    for path in ("/api/version", "/api/info", "/version"):
+        try:
+            resp = requests.get(f"{base_url.rstrip('/')}{path}", headers=headers, timeout=5)
+            if resp.ok:
+                try:
+                    return resp.json().get("version", resp.text.strip())
+                except Exception:
+                    return resp.text.strip()
+        except Exception:
+            continue
+    return "unknown"
+
+
+def candidates_for_upload() -> List[str]:
+    """
+    All upload‑endpoint candidates that have ever existed in the official
+    Open‑WebUI code base (ordered from newest → oldest).
+    """
+    return [
+        "/files",                # 0.5.x (current default)
+        "/files/upload",         # ≤ 0.4.x (legacy, removed in 0.5)
+        "/api/files/",         # ≤ 0.4.x (legacy, removed in 0.5)
+        "/api/files/upload",         # ≤ 0.4.x (legacy, removed in 0.5)
+        "/api/v1/files",             # ≤ 0.4.0 (early versioned API)
+        "/api/v1/files/upload",      # ≤ 0.4.0 (early versioned API)
+        "/api/v2/files/upload",      # future‑proof placeholder – not used today
+    ]
+
+
+def discover_upload_endpoint(base_url: str, headers: Dict[str, str]) -> str:
+    """
+    Try each candidate with an **OPTIONS** request.  The first candidate whose
+    `Allow:` header contains `POST` is returned.  If none advertise POST we
+    fall back to the default `/api/files` (the script will raise a clear error
+    if that still fails).
+    """
+  
+    print(f"Starting test with a base of: {base_url}")
+    for candidate in candidates_for_upload():
+        test_url = f"{base_url.rstrip('/')}{candidate}/?process=true&process_in_background=true"
+        print(f"Test candidate: {test_url}")
+        theader= f"{headers} -H 'accept': 'application/json' -H 'Content-Type: multipart/form-data'"
+        try:
+            resp = requests.options(test_url, headers=theaders, timeout=5)
+            if resp.status_code in (200, 204) and "POST" in resp.headers.get("Allow", ""):
+                # Good candidate – server says POST is allowed.
+                print(f"Good candidate found {test_url}")
+                return candidate
+            else:
+                print(f"Candidate url: {test_url}  --- FAILED")
+        except Exception:
+            # Network‑level error – just ignore and try the next candidate.
+            print(f"Candidate url: {test_url}  --- FAILED")
+            pass
+    # No candidate advertised POST → fall back to the default and let the
+    # upload routine surface the 405 (so the user sees a useful error).
+    print("Base URL failed")
+    return f"{base_url}/api/v1/files/?process=true&process_in_background=true"
+
+
+def upload_one_file(base_url: str,
+                    headers: Dict[str, str],
+                    file_path: pathlib.Path,
+                    upload_endpoint: str) -> str:
+    """
+    Stream‑upload a single file.  Returns the `file_id` string on success.
+    """
+    print(f"base: {base_url.rstrip('/')}")
+    print(f"endpoint: {upload_endpoint}")
+    url = f"{upload_endpoint}"
+    file_size = file_path.stat().st_size
+    print(f"Upload url: {url}")
+    # ------------------------------------------------------------------
+    # Tiny reader that updates a tqdm bar while `requests` reads the stream.
+    # ------------------------------------------------------------------
+    class TqdmReader:
+        def __init__(self, generator):
+            self.gen = generator
+            self.buffer = b""
+
+        def read(self, n=-1):
+            if n == -1:
+                data = b"".join(self.gen)
+            else:
+                while len(self.buffer) < n:
+                    try:
+                        self.buffer += next(self.gen)
+                    except StopIteration:
+                        break
+                data, self.buffer = self.buffer[:n], self.buffer[n:]
+            pbar.update(len(data))
+            return data
+
+    def chunk_generator():
+        with file_path.open("rb") as f:
+            while True:
+                chunk = f.read(CHUNK_SIZE)
+                if not chunk:
+                    break
+                yield chunk
+
+    with tqdm(total=file_size,
+              unit="B",
+              unit_scale=True,
+              unit_divisor=1024,
+              desc=f"Uploading {file_path.name}",
+              leave=False) as pbar:
+        #files = {'file': @'pdf/Contract.pdf/Contract.pdf;type=application/pdf'}
+        #print(f"Files: {files}") 
+        files = {"file": (file_path.name)} # @COVER.pdf;type=application/pdf    , TqdmReader(chunk_generator()))}
+        #print(f"Files: {files}")
+        #url = f"{url}/?process=true&process_in_background=true"
+        #print(f"URL: {url}")
+        #headers = f"{headers},'Content-Type':'multipart/form-data'"
+        print(f"Headers: {headers}")
+        resp = requests.post(url, headers=headers, files=files)
+        print(f"Response: {resp.text}")
+    # ------------------------------------------------------------------
+    # 405 → caller is hitting the *wrong* endpoint – bubble up a clear error.
+    # ------------------------------------------------------------------
+    if resp.status_code == 405:
+        raise RuntimeError(f"Method Not Allowed (405) – wrong upload endpoint {url}.")
+    if resp.status_code != 200:
+        raise RuntimeError(f"Upload failed [{resp.status_code}] {resp.text}")
+
+    payload = resp.json()
+    file_id = payload.get("file_id")
+    if not file_id:
+        raise RuntimeError(f"Unexpected upload response: {payload}")
+    return file_id
+
+
+def attach_to_knowledge(base_url: str,
+                        headers: Dict[str, str],
+                        file_id: str,
+                        knowledge_id: str) -> Dict:
+    """
+    Attach a previously‑uploaded file to an existing knowledge entry.
+    Returns the JSON representation of the knowledge document after the
+    attachment.
+    """
+    url = f"{base_url.rstrip('/')}/knowledge/{file_id}"
+    params = {"knowledge_id": knowledge_id}
+    resp = requests.put(url, headers=headers, params=params)
+
+    if resp.status_code != 200:
+        raise RuntimeError(
+            f"Attaching file_id={file_id} to knowledge_id={knowledge_id} "
+            f"failed [{resp.status_code}] {resp.text}"
+        )
+    return resp.json()
+
+
+def list_recent_knowledge(base_url: str,
+                         headers: Dict[str, str],
+                         limit: int = 10) -> List[Dict]:
+    """Convenient helper – show the newest knowledge entries."""
+    url = f"{base_url.rstrip('/')}/knowledge"
+    resp = requests.get(url, headers=headers, params={"limit": limit})
+    resp.raise_for_status()
+    return resp.json()
+
+
+# ----------------------------------------------------------------------
+# Main entry point
+# ----------------------------------------------------------------------
+def main():
+    parser = argparse.ArgumentParser(
+        description=(
+            "Upload every *.pdf in ./pdf to Open‑WebUI and attach each file "
+            "to an existing knowledge entry (knowledge_id).  The script now "
+            "auto‑detects the correct upload endpoint."
+        )
+    )
+    parser.add_argument(
+        "--base-url",
+        default=DEFAULT_BASE_URL,
+        help=f"Root URL of the Open‑WebUI server (default: {DEFAULT_BASE_URL})",
+    )
+    parser.add_argument(
+        "--knowledge-id",
+        required=True,
+        help="ID of the knowledge entry you want to attach the PDFs to.",
+    )
+    parser.add_argument(
+        "--upload-endpoint",
+        default=None,
+        help="Override the automatically discovered upload endpoint.  "
+             "If omitted the script will try all known candidates and pick the one "
+             "that advertises POST in its `Allow:` header.",
+    )
+    auth = parser.add_mutually_exclusive_group(required=True)
+    auth.add_argument("--token", help="Bearer token (preferred).")
+    auth.add_argument("--email", help="Email Address (will be prompted for password).")
+    parser.add_argument("--pwd", help="Password (if omitted you will be prompted).")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Only upload files – do NOT attach them to the knowledge entry.",
+    )
+    parser.add_argument(
+        "--list",
+        action="store_true",
+        help="After processing, list the most recent knowledge entries (limit 10).",
+    )
+    args = parser.parse_args()
+    token = os.environ['OPEN_KEY']
+    #print(f"ARGS: {args}")
+    login()
+    # ------------------------------------------------------------------
+    # Build the Authorization header
+    # ------------------------------------------------------------------
+    if args.token:
+        headers = auth_headers(token=args.token)
+    else:
+        pwd = args.pwd or getpass.getpass(prompt="Password: ")
+        headers = auth_headers(email=args.email, password=pwd)
+    # ------------------------------------------------------------------
+    # Show server version – helpful for sanity‑checking the API version
+    # ------------------------------------------------------------------
+    version = get_server_version(args.base_url, headers)
+    print(f"🖥️  Open‑WebUI server version: {version}")
+
+    # ------------------------------------------------------------------
+    # Determine the *actual* upload endpoint to use
+    # ------------------------------------------------------------------
+    if args.upload_endpoint:
+        upload_path = args.upload_endpoint
+        print(f"🔧  Using user‑provided upload endpoint: {upload_path}")
+    else:
+        upload_path = discover_upload_endpoint(args.base_url, headers)
+        print(f"🔧  Auto‑discovered upload endpoint: {upload_path}")
+
+    # ------------------------------------------------------------------
+    # Verify that the PDF source directory exists
+    # ------------------------------------------------------------------
+    if not PDF_DIR.is_dir():
+        sys.exit(f"❌  Directory '{PDF_DIR}' does not exist or is not a folder.")
+    pdf_files = sorted(PDF_DIR.glob("*.pdf"))
+    if not pdf_files:
+        sys.exit(f"❌  No *.pdf files found in folder '{PDF_DIR}'.")
+
+    print(f"\n🚀  Found {len(pdf_files)} PDF file(s) in '{PDF_DIR}'.\n")
+
+    # ------------------------------------------------------------------
+    # Reset the Authorization header
+    # ------------------------------------------------------------------
+    if args.token:
+        headers = auth_headers(token=args.token)
+    else:
+        pwd = args.pwd or getpass.getpass(prompt="Password: ")
+        headers = auth_headers(email=args.email, password=args.pwd)
+
+
+    # ------------------------------------------------------------------
+    # Process each PDF
+    # ------------------------------------------------------------------
+    summary: List[Dict[str, str]] = []   # for the final table
+
+    for pdf_path in pdf_files:
+        try:
+            # ---------- 1️⃣  Upload ----------
+            try:
+                file_id = upload_one_file(
+                    args.base_url, headers, pdf_path, upload_path
+                )
+            except RuntimeError as e:
+                # If we got a 405 on the *first* try, fall back through the
+                # historic candidates (except the one we already tried).
+                if "Method Not Allowed" in str(e):
+                    print(f"⚠️  {pdf_path.name}: {e} – trying alternate candidates …")
+                    # Try the other historic candidates (skip the one we already used)
+                    for alt in candidates_for_upload():
+                        if alt == upload_path:
+                            continue
+                        try:
+                            file_id = upload_one_file(
+                                args.base_url, headers, pdf_path, alt
+                            )
+                            print(f"✅  {pdf_path.name}: succeeded with alternate endpoint `{alt}`")
+                            upload_path = alt          # remember the working path for the rest of the run
+                            break
+                        except RuntimeError as inner:
+                            if "Method Not Allowed" in str(inner):
+                                # keep trying
+                                continue
+                            else:
+                                raise
+                    else:
+                        # No alternate succeeded → re‑raise the original error
+                        raise
+                else:
+                    raise
+
+            # ---------- 2️⃣  (optional) attach ----------
+            knowledge_doc_id = "<dry‑run>"
+            if not args.dry_run:
+                attach_resp = attach_to_knowledge(
+                    args.base_url, headers, file_id, args.knowledge_id
+                )
+                knowledge_doc_id = attach_resp.get("id", "<no‑id>")
+            summary.append(
+                {"pdf": pdf_path.name,
+                 "file_id": file_id,
+                 "knowledge_doc_id": knowledge_doc_id}
+            )
+            print(
+                f"✅  {pdf_path.name} → file_id={file_id[:8]}… → "
+                f"knowledge_doc_id={knowledge_doc_id[:8]}…"
+            )
+        except Exception as exc:
+            print(f"❌  Failed processing {pdf_path.name}: {exc}")
+            summary.append(
+                {"pdf": pdf_path.name,
+                 "file_id": "<error>",
+                 "knowledge_doc_id": "<error>"}
+            )
+
+    # ------------------------------------------------------------------
+    # Pretty‑print a summary table
+    # ------------------------------------------------------------------
+    print("\n=== Summary ===========================================================")
+    print(
+        tabulate(
+            summary,
+            headers={"pdf": "PDF", "file_id": "File‑ID", "knowledge_doc_id": "Knowledge‑Doc‑ID"},
+            tablefmt="github",
+        )
+    )
+
+    # ------------------------------------------------------------------
+    # Optional sanity‑check – list the newest knowledge entries
+    # ------------------------------------------------------------------
+    if args.list:
+        try:
+            recent = list_recent_knowledge(args.base_url, headers)
+            print("\n🔎  10 most recent knowledge entries:")
+            for i, entry in enumerate(recent, start=1):
+                print(
+                    f"{i:2}. id={entry.get('id')[:8]}…  "
+                    f"file_id={entry.get('file_id')[:8]}…  "
+                    f"title={entry.get('title') or '-'}"
+                )
+        except Exception as exc:
+            print(f"⚠️  Could not list knowledge entries: {exc}")
+
+    print("\n🎉  Done!\n")
+
+
+if __name__ == "__main__":
+    main()

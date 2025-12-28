@@ -1,0 +1,125 @@
+Transmittal Report:
+Created by AutoCAD eTransmit Tuesday, May 31, 2011, 1:20 PM.
+
+Drawing:
+This is a transmittal based on multiple drawings.
+
+Files:
+
+
+Root Drawings:	1267800_S1.dwg
+	DOYO1.233700-G-02-UTILITY ASBLTS_110112.dwg
+	1267800_S2.dwg
+	1267800_S3.dwg
+	1267800_S4.dwg
+	1267800_S5.dwg
+	DOY01.233700 Cover.dwg
+	DOY01.233700 E-01 (Lower Lvl).dwg
+	DOY01.233700 E-02 (Upper Planl).dwg
+	DOY01.233700 E-03 (Upper Planl).dwg
+	DOY01.233700 E-04 (Upper Planl).dwg
+	DOY01.233700 E-05 (Lower Lvl).dwg
+	DOY01.233700 E-06 (Panelboard).dwg
+	DOY01.233700 E-07 (Service Connection).dwg
+	DOY01.233700 E-08 (Ductbank Detail).dwg
+	DOY01.233700 G-01 (Site Pln).dwg
+	DOY01.233700 M-01 (Lower Lvl).dwg
+	DOY01.233700 M-02 (Upper Lvl).dwg
+	DOY01.233700 M-03 (Lower Lvl).dwg
+	DOY01.233700 M-04 (Lower Lvl).dwg
+	DOY01.233700 M-05 (Lower Lvl).dwg
+	DOY01.233700 M-06 (Details).dwg
+	DOY01.233700 M-07 (Isometrics).dwg
+	DOY01.233700 PC-01 (Lower Lvl).dwg
+	DOY01.233700 PC-02 (Upper Planl).dwg
+	DOY01.233700 PC-03 (Upper Planl).dwg
+	DOY01.233700 PC-04 (Upper Planl).dwg
+	DOY01.233700 PC-05 (Lower Lvl).dwg
+	DOY01.233700 X-01 (Abbr_Symbls).dwg
+	DOY01.233700_PC-04_(Upper_Planl).dwg
+	DOY01.233700-PC-06.dwg
+	DOY01.233700-PC-07.dwg
+	DOY01.233700-PC-08.dwg
+	DOY01.233700-PC-09.dwg
+	DOY01.233700-PC-10.dwg
+
+AutoCAD Drawing (External) References:
+	XREF\Doyon COVER 11x17 TB.dwg
+	XREF\Doyon 11x17 TB.dwg
+	Electrical\DOY01.233700-E-H6-3-3 Vlt (After 95% submttl).dwg
+	Mechanical\DOY01.233700-H6-3-3 Vlt (After 95% submttl).dwg
+	Electrical\DOY01.233700-E-H6-3-3 FH'S.dwg
+	Mechanical\DOY01.233700-H6-3-3 FH'S.dwg
+	Mechanical\DOY01.233700-Details.dwg
+	336a Condensate iso.dwg
+	336a Steam iso.dwg
+	Controls\DOY01.233700-PC-H6-3-3 Vlt (After 95% submttl).dwg
+	Controls\DOY01.233700-PC-H6-3-3 FH'S.dwg
+	General X_MEP\X_X1.0.dwg
+	Controls\DOY01.233700-X-Misc Details.dwg
+
+AutoCAD Color-dependent Plot Style Table File References:
+	PlotCfgs\FH Standard.ctb
+	PlotCfgs\FH Utilities.ctb
+	PlotCfgs\X-Lite.ctb
+
+Bitmap image References:
+	XREF\Alaska Map.bmp
+	XREF\fairbanks.bmp
+
+PNG image References:
+	XREF\DU-logo.png
+
+TIFF image References:
+	XREF\North Post2.tif
+
+AutoCAD Plotter Configuration File References:
+	PlotCfgs\DWF6 ePlot.pc3
+
+The following files were excluded from the transmittal:
+	ACAD.FMP
+	Fonts\romans.shx
+	Fonts\ROMAND.SHX
+	Fonts\arial.ttf
+	Fonts\txt.shx
+	PlotCfgs\DWF ePlot (optimized for plotting).pc3
+	Fonts\simplex.shx
+	Fonts\bold.shx
+	Fonts\romanc.shx
+	Fonts\ITALIC.shx
+	Fonts\36.shx
+	Fonts\ROMANT.shx
+	Fonts\bambamnb.shx
+	Fonts\archstyl.shx
+	@MS Mincho.(shx,ttf)
+	Fonts\arialbd.ttf
+	MSMINCHO.(shx,ttf)
+	Fonts\greeks.shx
+	Fonts\19.shx
+	Fonts\ltypeshp.shx
+	Mechanical\DOY01.233700-H6-3-3 Vlt (After_95%_submttl).dwg
+	PlotCfgs\AIA Standard.ctb
+
+The following files could not be located:
+	PlotCfgs\DWF ePlot (optimized for plotting).pc3
+	@MS Mincho.(shx,ttf)
+	MSMINCHO.(shx,ttf)
+	Mechanical\DOY01.233700-H6-3-3 Vlt (After_95%_submttl).dwg
+	PlotCfgs\AIA Standard.ctb
+
+
+Notes for distribution:
+
+.DWG external reference files:
+External reference (xref) paths may be present.  Make sure these paths work or that the root drawing is using the correct references.
+eTransmit does not include files required by xrefs unless they are also required by the root drawing.  In particular, plot style tables and overlay xrefs that are not used by the root drawing are omitted
+
+Raster image files:
+Paths may be present on references to raster images.  Make sure these paths work or that the root drawing is using the correct references.
+
+.PC3 printer configuration files:
+Please copy these files to the AutoCAD Printer Configuration Search Path directory.
+
+.CTB/.STB plot style tables:
+Please copy these files to the AutoCAD Plot Style Table Search Path directory.
+

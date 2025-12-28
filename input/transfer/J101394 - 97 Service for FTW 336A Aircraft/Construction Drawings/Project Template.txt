@@ -1,0 +1,265 @@
+Transmittal Report:
+Created by AutoCAD eTransmit Wednesday, February 27, 2013, 7:00 PM.
+
+Drawing Sheet Set:
+
+This is a transmittal based on drawing sheets from the sheet set:
+	Project Template.
+
+Subset: General MEP
+      Sheets:
+      COVER COVER SHEET
+      G-01 SITE PLAN
+      X-01 SYMBOLS, ABBREVIATIONS & GENERAL NOTES
+      X-02 SYMBOLS, ABBREVIATIONS & GENERAL NOTES
+      X-03 SYMBOLS, ABBREVIATIONS & GENERAL NOTES
+
+Subset: Mechanical
+      Sheets:
+      M-01 EXISTING  VAULT  H6-3-3  LOWER LEVEL PLAN
+      M-02 EXISTING  VAULT  H6-3-3  UPPER LEVEL PLAN
+      M-03 EXISTING  VAULT  H6-3-3  ADJACENT TO BLDG 2080
+      M-04 NEW  VAULT  G6-9-3
+      M-05 DIRECT BURIED PIPING PLAN
+      M-06 SCHEMATICS  &  DETAILS
+      UES-DD-H012 Transmitter (missing sheet dwg)
+
+Subset: Electrical
+      Sheets:
+      E-01 EXISTING  VAULT  H6-3-3  &  UTILIDOR
+      E-02 EXISTING  VAULT  H6-3-3  &  UTILIDOR
+      E-03 EXISTING  VAULT  H6-3-3  &  UTILIDOR
+      E-04 NEW  VAULT  G6-9-3
+      E-05 DIRECT BURIED CONDUIT PLAN
+      E-06 PP-G693 (PANELBOARD SCHEDULE)
+      E-07 UTILIDOR SERVICE CONNECTION DETAILS
+      E-08 DUCT BANK DETAIL
+
+Subset: Controls
+      Sheets:
+      PC-01 EXISTING  VAULT  H6-3-3  &  NEW  VAULT  G6-9-3
+      PC-02 EXISTING  VAULT  H6-3-3  &  NEW  VAULT  G6-9-3
+      PC-03 EXISTING  VAULT  H6-3-3  &  NEW  VAULT  G6-9-3
+      PC-04 NEW  VAULT  G6-9-3
+      PC-05 DIRECT BURIED DUCT PLAN
+      PC-06 BUILDING METER INTERFACE DETAIL
+      PC-07 MISCELLANEOUS UTILITY MONITORING DETAILS
+      PC-08 UTILITY MONITORING
+      PC-09 UTILITY MONITORING
+      PC-10 UTILITY MONITORING
+      PC-336AM.1.1 CP-336AM  PANEL LAYOUT
+      PC-336AM.I.2 CP-336AM BILL OF MATERIAL AND NAMEPLATE SCHEDULE
+      PC-336AM.1.3 CP-336AM  DRAWING NOTES AND LEGEND
+      PC-336AM.2.1 CP-336AM  POWER DISTRIBUTION WIRING
+      PC-G693.1.1 CP-G693  PANEL LAYOUT
+      PC-G693.1.2 CP-G693  BILL OF MATERIALS
+      PC-G693.1.3 CP-G693, NOTES NAMEPLATE AND FUSE SCHEDULES
+      PC-G693.2.1 CP-G693, POWER DISTRIBUTION
+      PC-G693.2.2 CP-G693, POWER DISTRIBUTION
+      PC-G693.3.1 CP-G693  MODULES 1 AND 2
+      PC-G693.3.2 CP-G693  MODULES 3 AND 4
+      PC-G693.3.3 CP-G693  MODULE 5
+      EJA530A Transmitter (details)
+
+
+Files:
+
+
+Root Drawings:	Sheets\General MEP\DOY01.233700 Cover.dwg
+	Sheets\General MEP\DOY01.233700 G-01 (Site Pln).dwg
+	Sheets\General MEP\DOY01.233700 X-01 (Abbr_Symbls).dwg
+	Sheets\Mechanical\DOY01.233700 M-01 (Lower Lvl).dwg
+	Sheets\Mechanical\DOY01.233700 M-02 (Upper Lvl).dwg
+	Sheets\Mechanical\DOY01.233700 M-03 (Lower Lvl).dwg
+	Sheets\Mechanical\DOY01.233700 M-04 (Lower Lvl).dwg
+	Sheets\Mechanical\DOY01.233700 M-05 (Lower Lvl).dwg
+	Sheets\Mechanical\DOY01.233700 M-06 (Details).dwg
+	Sheets\Electrical\DOY01.233700 E-01 (Lower Lvl).dwg
+	Sheets\Electrical\DOY01.233700 E-02 (Upper Planl).dwg
+	Sheets\Electrical\DOY01.233700 E-03 (Upper Planl).dwg
+	Sheets\Electrical\DOY01.233700 E-04 (Upper Planl).dwg
+	Sheets\Electrical\DOY01.233700 E-05 (Lower Lvl).dwg
+	Sheets\Electrical\DOY01.233700 E-06 (Panelboard).dwg
+	Sheets\Electrical\DOY01.233700 E-07 (Service Connection).dwg
+	Sheets\Electrical\DOY01.233700 E-08 (Ductbank Detail).dwg
+	Sheets\Controls\DOY01.233700 PC-01 (Lower Lvl).dwg
+	Sheets\Controls\DOY01.233700 PC-02 (Upper Planl).dwg
+	Sheets\Controls\DOY01.233700 PC-03 (Upper Planl).dwg
+	Sheets\Controls\DOY01.233700 PC-04 (Upper Planl).dwg
+	Sheets\Controls\DOY01.233700 PC-05 (Lower Lvl).dwg
+	Sheets\Controls\DOY01.233700-PC-06.dwg
+	Sheets\Controls\DOY01.233700-PC-07.dwg
+	Sheets\Controls\DOY01.233700-PC-08.dwg
+	Sheets\Controls\DOY01.233700-PC-09.dwg
+	Sheets\Controls\DOY01.233700-PC-10.dwg
+	Sheets\Controls\DOY01.233700-PC-336AM.1.1 CP-336AM, PANEL LAYOUT.dwg
+	Sheets\Controls\DOY01.233700-PC-336AM.1.2 CP-336AM, BILL OF MATERIALS AND NAMEPLATE SCHEDULE.dwg
+	Sheets\Controls\DOY01.233700-PC-336AM.1.3 CP-336AM, DRAWING NOTES AND LEGEND.dwg
+	Sheets\Controls\DOY01.233700-PC-336AM.2.1 CP-336AM, POWER DISTRIBUTION WIRING.dwg
+	Sheets\Controls\DOY01.233700-PC-G693.1.1 CP-G693, PANEL LAYOUT.dwg
+	Sheets\Controls\DOY01.233700-PC-G693.1.2 CP-G693, BILL OF MATERIALS.dwg
+	Sheets\Controls\DOY01.233700-PC-G693.1.3 CP-G693, NOTES, NAMEPLATE AND FUSE SCHEDULES.dwg
+	Sheets\Controls\DOY01.233700-PC-G693.2.1 CP-G693, POWER DISTRIBUTION WIRING.dwg
+	Sheets\Controls\DOY01.233700-PC-G693.2.2 CP-G693, POWER DISTRIBUTION WIRING.dwg
+	Sheets\Controls\DOY01.233700-PC-G693.3.1 CP-G693, MODULES 1 AND 2.dwg
+	Sheets\Controls\DOY01.233700-PC-G693.3.2 CP-G693, MODULES 3 AND 4.dwg
+	Sheets\Controls\DOY01.233700-PC-G693.3.3 CP-G693, MODULE 5.dwg
+	Sheets\Controls\DOY01.233700 Transmitter (Details).dwg
+
+AutoCAD Drawing (External) References:
+	XREF\Doyon COVER 11x17 TB.dwg
+	XREF\Doyon 11x17 TB.dwg
+	General X_MEP\X_X1.0.dwg
+	Constructs\Mechanical\DOY01.233700-H6-3-3 Vlt (After 95% submttl).dwg
+	Constructs\Mechanical\DOY01.233700-H6-3-3 FH'S.dwg
+	Constructs\Mechanical\DOY01.233700-Details.dwg
+	Constructs\Electrical\DOY01.233700-E-H6-3-3 Vlt (After 95% submttl).dwg
+	Constructs\Electrical\DOY01.233700-E-H6-3-3 FH'S.dwg
+	Constructs\Controls\DOY01.233700-PC-H6-3-3 Vlt (After 95% submttl).dwg
+	Constructs\Controls\DOY01.233700-PC-H6-3-3 FH'S.dwg
+	Constructs\Controls\DOY01.233700-X-Misc Details.dwg
+	Constructs\Controls\DOY01.233700-X-PC-CP-336AM PANEL LAYOUT.dwg
+	Constructs\Controls\DOY01.233700-X-PC-CP-336AM WIRING.dwg
+	Constructs\Controls\DOY01.233700-X-PC-G693 Control Panel.dwg
+	Constructs\Controls\DOY01.233700-X-PC-G693 Wiring.dwg
+	Constructs\Controls\DOY01.233700-X-Transmitter (Details).dwg
+	title block\SKETCHT11x17.dwg
+
+JPEG image References:
+	Textures\Doors - Windows.Metal Doors - Frames.Aluminum Frame.Anodized.Dark Bronze.Satin.jpg
+	Textures\Doors - Windows.Wood Doors.Ash.jpg
+	Textures\Finishes.Painting.Paint.jpg
+	Textures\Finishes.Painting.Paint.bump.jpg
+	Textures\Furnishings.Fabrics.Leather.Black.jpg
+	Textures\Woods - Plastics.Architectural Woodwork.Wood Stairs and Railings.Ash.jpg
+	Textures\Woods - Plastics.Finish Carpentry.Plastic Laminates.Light Beige.jpg
+	Textures\Woods - Plastics.Finish Carpentry.Plastic Laminates.Light Beige.bump.jpg
+
+AutoCAD Plotter Configuration File References:
+	PlotCfgs\DWF6 ePlot.pc3
+
+Bitmap image References:
+	XREF\Alaska Map.bmp
+
+PNG image References:
+	XREF\DU-logo.png
+	XREF\DU-logo.png
+
+TIFF image References:
+	XREF\North Post2.tif
+
+AutoCAD Color-dependent Plot Style Table File References:
+	PlotCfgs\FH Utilities.ctb
+	PlotCfgs\FH Standard.ctb
+	PlotCfgs\X-Lite.ctb
+
+Microsoft Excel 97-2003 Worksheet References:
+	Data Link Files\Instrument Tag Matrix.xls
+
+The following files were excluded from the transmittal:
+	Start\Start\FH_Model.dwt
+	ACAD.FMP
+	Fonts\romans.shx
+	Fonts\ARIAL.TTF
+	Fonts\ARIALBD.TTF
+	Fonts\ltypeshp.shx
+	Fonts\greeks.shx
+	Aecb Sheet Set (US Imperial Ctb).dst
+	Util Extension to Aircraft Parts Storage FTW336A.apj
+	Util Extension to Aircraft Parts Storage FTW336A.dst
+	Util Extension to Aircraft Parts Storage FTW336A.rpq
+	fairbanks.bmp
+	Bulletin Board.htm
+	DOY01.233700 Cover.xml
+	Fonts\txt.shx
+	Fonts\36.shx
+	Fonts\ROMANT.shx
+	Fonts\ROMAND.shx
+	Fonts\ROMANC.shx
+	Fonts\bambamnb.shx
+	Fonts\archstyl.shx
+	DOY01.233700 G-01 (Site Pln).xml
+	Fonts\19.shx
+	Fonts\simplex.shx
+	DOY01.233700 X-01 (Abbr_Symbls).xml
+	Fonts\special.shx
+	DOY01.233700 M-01 (Lower Lvl).xml
+	DOY01.233700 M-02 (Upper Lvl).xml
+	DOY01.233700 M-03 (Lower Lvl).xml
+	DOY01.233700 M-04 (Lower Lvl).xml
+	DOY01.233700 M-05 (Lower Lvl).xml
+	DOY01.233700 M-06 (Details).xml
+	DOY01.233700 E-01 (Lower Lvl).xml
+	DOY01.233700 E-02 (Upper Planl).xml
+	DOY01.233700 E-03 (Upper Planl).xml
+	DOY01.233700 E-04 (Upper Planl).xml
+	DOY01.233700 E-05 (Lower Lvl).xml
+	DOY01.233700 E-06 (Panelboard).xml
+	DOY01.233700 E-07 (Service Connection).xml
+	DOY01.233700 E-08 (Ductbank Detail).xml
+	DOY01.233700 PC-01 (Lower Lvl).xml
+	DOY01.233700 PC-02 (Upper Planl).xml
+	DOY01.233700 PC-03 (Upper Planl).xml
+	DOY01.233700 PC-04 (Upper Planl).xml
+	DOY01.233700 PC-05 (Lower Lvl).xml
+	DOY01.233700-PC-06.xml
+	DOY01.233700-PC-07.xml
+	DOY01.233700-PC-08.xml
+	DOY01.233700-PC-09.xml
+	DOY01.233700-PC-10.xml
+	DOY01.233700-PC-336AM.1.1 CP-336AM, PANEL LAYOUT.xml
+	Fonts\bgothl.ttf
+	Fonts\monotxt.shx
+	Fonts\BOLD.SHX
+	Fonts\complex.shx
+	Fonts\italic.shx
+	Fonts\TAHOMA.TTF
+	Fonts\proc.shx
+	DOY01.233700-PC-336AM.1.2 CP-336AM, BILL OF MATERIALS AND NAMEPLATE SCHEDULE.xml
+	DOY01.233700-PC-336AM.1.3 CP-336AM, DRAWING NOTES AND LEGEND.xml
+	DOY01.233700-PC-336AM.2.1 CP-336AM, POWER DISTRIBUTION WIRING.xml
+	DOY01.233700-PC-G693.1.1 CP-G693, PANEL LAYOUT.xml
+	Fonts\pneu.shx
+	DOY01.233700-PC-G693.1.2 CP-G693, BILL OF MATERIALS.xml
+	DOY01.233700-PC-G693.1.3 CP-G693, NOTES, NAMEPLATE AND FUSE SCHEDULES.xml
+	DOY01.233700-PC-G693.2.1 CP-G693, POWER DISTRIBUTION WIRING.xml
+	DOY01.233700-PC-G693.2.2 CP-G693, POWER DISTRIBUTION WIRING.xml
+	DOY01.233700-PC-G693.3.1 CP-G693, MODULES 1 AND 2.xml
+	DOY01.233700-PC-G693.3.2 CP-G693, MODULES 3 AND 4.xml
+	DOY01.233700-PC-G693.3.3 CP-G693, MODULE 5.xml
+	DOY01.233700 Transmitter (Details).xml
+	Fonts\romant__.ttf
+
+The following files could not be located:
+	PlotCfgs\AIA Standard.ctb
+	Aecb Sheet Set (US Imperial Ctb).dst
+	Bulletin Board.htm
+	MSMINCHO.(shx,ttf)
+	hm-ld.(shx,ttf)
+	@MS Mincho.(shx,ttf)
+	helvl.(shx,ttf)
+	Xref\Doyon 11x17 TB.dwg
+	title block\SKETCHTBINFO.dwg
+
+The following files were not added because one or more files had the same path in the set already:
+	K:\DOY01 Doyon Utilities, LLC\233700 Util Extension to Aircraft Parts Storage FTW336A\Drawings\XREF\DU-logo.png (and K:\DOY01 Doyon Utilities, LLC\200000 Master FWA XREF Files\Drawings\XREF\DU-logo.png written to DU-logo.png\XREF).
+
+
+Notes for distribution:
+
+.DWG external reference files:
+External reference (xref) paths may be present.  Make sure these paths work or that the root drawing is using the correct references.
+eTransmit does not include files required by xrefs unless they are also required by the root drawing.  In particular, plot style tables and overlay xrefs that are not used by the root drawing are omitted
+
+Raster image files:
+Paths may be present on references to raster images.  Make sure these paths work or that the root drawing is using the correct references.
+
+.PC3 printer configuration files:
+Please copy these files to the AutoCAD Printer Configuration Search Path directory.
+
+.CTB/.STB plot style tables:
+Please copy these files to the AutoCAD Plot Style Table Search Path directory.
+
+Material texture files:
+Please copy these files to the AutoCAD Texture Maps Search Path directory.
+

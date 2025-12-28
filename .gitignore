@@ -1,0 +1,9 @@
+# Ignore all .log files
+*.log
+
+# Ignore the entire 'bin' directory
+/bin
+/include
+/lib
+# Ignore a specific file
+#my_config.ini
